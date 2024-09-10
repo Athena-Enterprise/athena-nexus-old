@@ -1,26 +1,71 @@
-Athena Nexus
-Athena Nexus is a collaborative project aimed at building an advanced Discord bot along with a powerful web dashboard for managing the bot. This project leverages Node.js, Express.js, and Discord.js for the backend, with a frontend planned to be developed using modern web technologies like Vue.js or React.js.
+<h1 align="center">Athena Nexus</h1>
 
-Features
-Discord Bot: A bot built with Discord.js that can be added to servers to perform various tasks.
-Web Dashboard: A user-friendly interface for managing bot features, settings, and viewing statistics.
-GitHub Integration: Automated deployment using GitHub Webhooks ensures that every update to the main branch triggers a pull and auto-restart on the VPS.
+<div align="center">
 
-Project Structure
-discord-bot: Contains the main Discord bot logic.
-discord-backend: Manages the backend services, including the OAuth2 integration and webhook listener for auto-deployment.
-discord-frontend: The planned web dashboard that will allow users to manage the bot.
+  <img src="https://img.shields.io/badge/Project-Active-brightgreen" alt="Project Status"/>
+  <img src="https://img.shields.io/badge/Contributors-3-blue" alt="Contributors"/>
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License"/>
+  
+</div>
 
-Credits
-This project is a collaborative effort by:
-ItzDusty
-Jakubi
-Zeca
+<p align="center">
+<strong>A Discord Bot Management System with Backend and Web Dashboard</strong>
+</p>
 
-Technologies Used
-Node.js
-Express.js
-Discord.js
-PM2 (Process Manager for Node.js)
-GitHub Webhooks (for automatic deployment)
-Nginx (for hosting the web dashboard and routing)
+---
+
+## 📚 Project Overview
+
+**Athena Nexus** is a powerful platform that enables **Discord bot management** via a web dashboard. It combines the power of **Node.js** and **Discord.js** for backend functionality and plans to include a frontend dashboard with **Vue.js** or **React.js**.
+
+This project is organized into three main components:
+
+- **Discord Bot**: A feature-rich bot built with **Discord.js**.
+- **Backend**: Manages bot interactions and OAuth2 flow for Discord login.
+- **Frontend (Planned)**: A web-based dashboard to manage bot settings and view statistics.
+
+---
+
+## 🚀 Features
+
+- **Discord Bot**: Add the bot to servers via OAuth2, use it for moderation, custom commands, etc.
+- **GitHub Webhooks**: Automatically deploy the latest code updates using GitHub Webhooks and PM2.
+- **Web Dashboard**: Manage bot settings, toggle features, and view server stats from a user-friendly interface.
+
+---
+
+## 🛠️ Technologies Used
+
+- **Node.js** (Backend)
+- **Discord.js** (Bot)
+- **Express.js** (API)
+- **PM2** (Process Manager)
+- **GitHub Webhooks** (Auto-deployment)
+- **Vue.js** or **React.js** (Frontend - Planned)
+
+---
+
+## 🏗️ Project Structure
+
+```plaintext
+athena-nexus/
+│
+├── discord-bot/             # Bot code (Discord.js)
+│   └── bot.js               # Main bot file
+│
+├── discord-backend/          # Backend server (Node.js)
+│   └── server.js            # Express server handling OAuth2 and Webhooks
+│
+├── discord-frontend/         # Planned Web Dashboard
+│
+└── deploy.sh                # Deployment script for auto-updates
+```
+
+## 📜 Credits
+This project was developed by the Athena Nexus team:
+- **ItzDusty**
+- **Jakubi**
+- **Zeca**
+
+## 📝 License
+This project is open-source under the MIT License.
