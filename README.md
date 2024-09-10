@@ -68,4 +68,4 @@ This project was developed by the Athena Nexus team:
 - **Zeca**
 
 ## 📝 License
-This project is open-source under the MIT License.
+This project is open-source under the MIT License. And might change at any given time.
