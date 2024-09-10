@@ -42,6 +42,7 @@ This project is organized into three main components:
 - **PM2** (Process Manager)
 - **GitHub Webhooks** (Auto-deployment)
 - **Vue.js** or **React.js** (Frontend - Planned)
+- **Other things planned**
 
 ---
 
@@ -68,4 +69,4 @@ This project was developed by the Athena Nexus team:
 - **Zeca**
 
 ## 📝 License
-This project is open-source under the MIT License. And might change at any given time.
+This project is open-source under the MIT License.
