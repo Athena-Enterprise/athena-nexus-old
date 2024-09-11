@@ -1,23 +1,38 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+// router/index.js
+import { createRouter, createWebHistory } from 'vue-router';
+import DashboardView from '@/views/DashboardView.vue';
+import HomeView from '@/views/HomeView.vue';
+import LoginPage from '@/views/LoginPage.vue';
+import RegisterPage from '@/views/RegisterPage.vue';
 
-import Home from '@/views/Home.vue';
-import Login from '@/views/Login.vue';
-import Register from '@/views/Register.vue';
-import Dashboard from '@/views/Dashboard.vue';
-import Admin from '@/views/Admin.vue';
+const routes = [
+  {
+    path: '/dashboard',
+    name: 'DashboardView',
+    component: DashboardView,
+  },
+  {
+    path: '/',
+    name: 'HomeView',
+    component: HomeView,
+  },
+  {
+    path: '/login',
+    name: 'LoginPage',
+    component: LoginPage,
+  },
+  {
+    path: '/register',
+    name: 'RegisterPage',
+    component: RegisterPage,
+  },
+];
 
-Vue.use(Router);
-
-const router = new Router({
-  mode: 'history',
-  routes: [
-    { path: '/', name: 'Home', component: Home },
-    { path: '/login', name: 'Login', component: Login },
-    { path: '/register', name: 'Register', component: Register },
-    { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-    { path: '/admin', name: 'Admin', component: Admin }
-  ]
+// Create the router instance
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
 });
 
+// Export the router to be used in main.js
 export default router;
