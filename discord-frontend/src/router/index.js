@@ -1,16 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LandingPage from '../views/LandingPage.vue';
-import Dashboard from '../views/Dashboard.vue'; // Placeholder for dashboard view
-import Login from '../views/Login.vue'; // Placeholder for login view
+import UserLogin from '../views/UserLogin.vue'; // Updated the component name
+import UserDashboard from '../views/UserDashboard.vue'; // Updated the component name
+import CreateBot from '../views/CreateBot.vue';
+import AdminDashboard from '../views/AdminDashboard.vue';
 
 const routes = [
-  { path: '/', name: 'landing', component: LandingPage },
-  { path: '/login', name: 'login', component: Login },
-  { path: '/dashboard', name: 'dashboard', component: Dashboard }
+  { path: '/', name: 'user-login', component: UserLogin }, // Use multi-word name for the route
+  { path: '/user-dashboard', name: 'user-dashboard', component: UserDashboard }, // Multi-word component name
+  { path: '/create-bot', name: 'create-bot', component: CreateBot },
+  { path: '/admin-dashboard', name: 'admin-dashboard', component: AdminDashboard },
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes,
 });
 
