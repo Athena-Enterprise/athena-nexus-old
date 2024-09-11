@@ -7,7 +7,7 @@
   
   <script>
   export default {
-    name: "Dashboard",
+    name: "DashboardView",
     mounted() {
       // Fetch user data and settings from the API
       console.log("Fetching user data for dashboard...");
