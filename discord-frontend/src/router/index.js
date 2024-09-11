@@ -53,17 +53,6 @@ const router = createRouter({
 });
 
 // Global navigation guard to redirect authenticated users
-router.beforeEach((to, from, next) => {
-  if (isAuthenticated() && to.name === 'landing-page') {
-    // If user is logged in and tries to access the landing page, redirect to the appropriate dashboard
-    if (isAdmin()) {
-      next({ name: 'admin-dashboard' });
-    } else {
-      next({ name: 'user-dashboard' });
-    }
-  } else {
-    next(); // Proceed as normal if no redirection is required
-  }
-});
+
 
 export default router;
