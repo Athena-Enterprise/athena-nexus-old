@@ -73,6 +73,30 @@ app.get('/callback', async (req, res) => {
   }
 });
 
+// Fetch user bots (Admin or user-specific dashboard data)
+app.get('/api/bots', async (req, res) => {
+  try {
+    const { rows: bots } = await dbPool.query('SELECT * FROM bots');
+    res.status(200).json(bots);
+  } catch (error) {
+    console.error('Error fetching bots:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Admin route to delete a bot
+app.delete('/api/bots/:id', async (req, res) => {
+  const botId = req.params.id;
+
+  try {
+    await dbPool.query('DELETE FROM bots WHERE id = $1', [botId]);
+    res.sendStatus(204); // No content after deletion
+  } catch (error) {
+    console.error('Error deleting bot:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 // Webhook Listener for GitHub (Auto-deploy)
 app.post('/deploy', (req, res) => {
   const payload = req.body;
