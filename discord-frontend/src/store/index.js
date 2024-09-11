@@ -1,39 +1,40 @@
-// store/index.js
 import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-    authenticated: false,
     user: null,
-    bots: [], // Store user's bots
-    superAdmin: false, // Flag to check if user is super admin
-  },
-  getters: {
-    isAuthenticated: state => state.authenticated,
-    isSuperAdmin: state => state.superAdmin,
+    authenticated: false,
+    role: null,
   },
   mutations: {
+    SET_USER(state, userData) {
+      state.user = userData;
+      state.authenticated = true;
+      state.role = userData.role;
+    },
     SET_AUTHENTICATED(state, status) {
       state.authenticated = status;
     },
-    SET_USER(state, user) {
-      state.user = user;
-    },
-    SET_BOTS(state, bots) {
-      state.bots = bots;
-    },
-    SET_SUPER_ADMIN(state, isAdmin) {
-      state.superAdmin = isAdmin;
+    LOGOUT_USER(state) {
+      state.user = null;
+      state.authenticated = false;
+      state.role = null;
+      localStorage.removeItem('user');
+      localStorage.removeItem('userRole');
     },
   },
   actions: {
-    authenticateUser({ commit }, { user, isAuthenticated, isAdmin }) {
-      commit('SET_USER', user);
-      commit('SET_AUTHENTICATED', isAuthenticated);
-      commit('SET_SUPER_ADMIN', isAdmin); // Set admin status
+    loginUser({ commit }, userData) {
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('userRole', userData.role);
+      commit('SET_USER', userData);
     },
-    setBots({ commit }, bots) {
-      commit('SET_BOTS', bots);
+    logoutUser({ commit }) {
+      commit('LOGOUT_USER');
     },
+  },
+  getters: {
+    isAuthenticated: state => state.authenticated,
+    isAdmin: state => state.role === 'admin',
   },
 });
