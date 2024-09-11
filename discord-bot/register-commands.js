@@ -1,16 +1,18 @@
 const { REST, Routes } = require('discord.js');
 const fs = require('fs');
-const { Pool } = require('pg'); // PostgreSQL driver
 require('dotenv').config({ path: '/home/itzdusty/athena-nexus/.env' });
+console.log('Active modules:', Object.keys(require.cache));
 
-// PostgreSQL setup
-const dbPool = new Pool({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-});
+// Ensure the token and client ID are provided
+if (!process.env.TOKEN) {
+  console.error('Error: Discord bot token is missing in the environment variables.');
+  process.exit(1);
+}
+
+if (!process.env.CLIENT_ID) {
+  console.error('Error: Discord client ID is missing in the environment variables.');
+  process.exit(1);
+}
 
 const commands = [];
 
@@ -29,20 +31,20 @@ for (const file of commandFiles) {
 console.log('Commands to be registered:', commands);
 
 // Create REST instance and deploy the commands
-const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+const rest = new REST({ version: '10' }).setToken(process.env.TOKEN.trim());
 
 (async () => {
   try {
     console.log('Started refreshing application (/) commands.');
-
-    // Register globally
+    
+    // Register commands globally
     await rest.put(
-      Routes.applicationCommands(process.env.CLIENT_ID), // Globally
+      Routes.applicationCommands(process.env.CLIENT_ID), // Global command registration
       { body: commands }
     );
 
     console.log('Successfully reloaded application (/) commands.');
   } catch (error) {
-    console.error('Error registering commands:', error);
+    console.error('Error registering commands:', error.message);
   }
 })();

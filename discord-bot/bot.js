@@ -1,22 +1,18 @@
-const { Client, GatewayIntentBits, Collection, REST, Routes } = require('discord.js');
-const { Pool } = require('pg');  // PostgreSQL driver
+const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const fs = require('fs');
 require('dotenv').config({ path: '/home/itzdusty/athena-nexus/.env' });
 
-// PostgreSQL setup
-const dbPool = new Pool({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-});
+// Ensure the token exists
+if (!process.env.TOKEN) {
+  console.error('Error: Discord bot token is missing in the environment variables.');
+  process.exit(1);
+}
 
+// Initialize the bot client
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 // Store commands in a collection
 client.commands = new Collection();
-const allCommands = [];
 
 // Load all command files from the commands directory
 const commandFiles = fs.readdirSync(__dirname + '/commands').filter(file => file.endsWith('.js'));
@@ -24,34 +20,7 @@ const commandFiles = fs.readdirSync(__dirname + '/commands').filter(file => file
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   client.commands.set(command.name, command);
-  allCommands.push({
-    name: command.name,
-    description: command.description,
-  });
 }
-
-// Register commands dynamically for each server
-client.on('guildCreate', async (guild) => {
-  try {
-    // Fetch server-specific configuration from PostgreSQL
-    const res = await dbPool.query('SELECT * FROM guild_config WHERE guild_id = $1', [guild.id]);
-    const serverConfig = res.rows[0];
-
-    // Filter commands based on the enabled commands for that server
-    const enabledCommands = allCommands.filter(cmd => serverConfig.enabled_commands.includes(cmd.name));
-
-    const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
-
-    console.log(`Registering commands for guild: ${guild.id}`);
-    await rest.put(
-      Routes.applicationGuildCommands(process.env.CLIENT_ID, guild.id), // Register commands for the specific guild
-      { body: enabledCommands }
-    );
-    console.log(`Successfully registered commands for guild: ${guild.name}`);
-  } catch (error) {
-    console.error(`Error registering commands for guild: ${guild.name}`, error);
-  }
-});
 
 // Bot ready event
 client.once('ready', () => {
@@ -73,4 +42,4 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN.trim());
