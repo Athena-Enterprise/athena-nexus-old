@@ -17,31 +17,22 @@ const dbPool = new Pool({
   port: process.env.PGPORT,
 });
 
-// OAuth2 configuration for Discord
+// Discord OAuth2 configuration
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const redirectUri = process.env.REDIRECT_URI;
 
-// Secret token for verifying GitHub webhook signature
+// GitHub Webhook Secret
 const webhookSecret = process.env.WEBHOOK_SECRET;
 
-// Middleware for parsing JSON bodies and verifying GitHub Webhook signature
-app.use(bodyParser.json({
-  verify: (req, res, buf, encoding) => {
-    const signature = req.headers['x-hub-signature-256'];
-    if (!signature) {
-      return res.status(403).send('Signature required');
-    }
+// Middleware for parsing JSON bodies
+app.use(bodyParser.json());
 
-    const hmac = crypto.createHmac('sha256', webhookSecret);
-    hmac.update(buf);
-    const digest = `sha256=${hmac.digest('hex')}`;
-
-    if (signature !== digest) {
-      return res.status(403).send('Invalid signature');
-    }
-  }
-}));
+// OAuth2 Login Redirect
+app.get('/login', (req, res) => {
+  const discordOAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=identify`;
+  res.redirect(discordOAuthUrl);
+});
 
 // OAuth2 Callback Route for Discord
 app.get('/callback', async (req, res) => {
@@ -57,13 +48,25 @@ app.get('/callback', async (req, res) => {
       client_secret: clientSecret,
       grant_type: 'authorization_code',
       code: code,
-      redirect_uri: redirectUri
+      redirect_uri: redirectUri,
     }).toString(), {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     });
 
     const accessToken = tokenResponse.data.access_token;
-    res.send(`Bot added successfully! Access token: ${accessToken}`);
+
+    // Use access token to get user info
+    const userData = await axios.get('https://discord.com/api/users/@me', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    const { id, username, discriminator } = userData.data;
+
+    // Store user in PostgreSQL (adjust SQL query as per your table schema)
+    await dbPool.query('INSERT INTO users (discord_id, username, discriminator) VALUES ($1, $2, $3) ON CONFLICT (discord_id) DO NOTHING', [id, username, discriminator]);
+
+    // Redirect to the dashboard
+    res.redirect('/dashboard');
   } catch (error) {
     console.error('Error exchanging code:', error.response ? error.response.data : error.message);
     res.status(500).send('Internal Server Error');
@@ -74,7 +77,19 @@ app.get('/callback', async (req, res) => {
 app.post('/deploy', (req, res) => {
   const payload = req.body;
 
-  console.log('Received GitHub Webhook Payload:', JSON.stringify(payload, null, 2));
+  // Verify the payload signature
+  const signature = req.headers['x-hub-signature-256'];
+  if (!signature) {
+    return res.status(403).send('Signature required');
+  }
+
+  const hmac = crypto.createHmac('sha256', webhookSecret);
+  hmac.update(JSON.stringify(payload));
+  const digest = `sha256=${hmac.digest('hex')}`;
+
+  if (signature !== digest) {
+    return res.status(403).send('Invalid signature');
+  }
 
   if (payload.ref === 'refs/heads/main') {
     exec('bash /home/itzdusty/athena-nexus/deploy.sh', (error, stdout, stderr) => {
@@ -90,12 +105,11 @@ app.post('/deploy', (req, res) => {
   }
 });
 
-// Handle PostgreSQL Data for Dashboard
+// Update Server Commands (API Route for Dashboard)
 app.post('/update-server-commands', async (req, res) => {
   const { server_id, enabled_commands } = req.body;
 
   try {
-    // Update PostgreSQL with the new enabled commands
     await dbPool.query(
       'INSERT INTO guild_config (guild_id, enabled_commands) VALUES ($1, $2) ON CONFLICT (guild_id) DO UPDATE SET enabled_commands = $2',
       [server_id, enabled_commands]
@@ -108,7 +122,8 @@ app.post('/update-server-commands', async (req, res) => {
   }
 });
 
-// Start the server
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
+// Start the Express server
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

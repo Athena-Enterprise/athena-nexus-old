@@ -1,61 +1,23 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from '../views/HomePage.vue'
-import Register from '../views/UserRegister.vue'
-import Login from '../views/UserLogin.vue'
-import Dashboard from '../views/UserDashboard.vue'
-import Admin from '../views/AdminDashboard.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-const routes = [
-  {
-    path: '/',
-    name: 'HomePage',
-    component: HomePage
-  },
-  {
-    path: '/userregister',
-    name: 'Register',
-    component: Register
-  },
-  {
-    path: '/userlogin',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/userdashboard',
-    name: 'Dashboard',
-    component: Dashboard,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/admindashboard',
-    name: 'Admin',
-    component: Admin,
-    meta: { requiresAuth: true, isAdmin: true }
-  }
-]
+import Home from '@/views/Home.vue';
+import Login from '@/views/Login.vue';
+import Register from '@/views/Register.vue';
+import Dashboard from '@/views/Dashboard.vue';
+import Admin from '@/views/Admin.vue';
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+Vue.use(Router);
 
-router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('user') // You can change this to check actual auth status
-  const isAdmin = localStorage.getItem('isAdmin') === 'true'
+const router = new Router({
+  mode: 'history',
+  routes: [
+    { path: '/', name: 'Home', component: Home },
+    { path: '/login', name: 'Login', component: Login },
+    { path: '/register', name: 'Register', component: Register },
+    { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+    { path: '/admin', name: 'Admin', component: Admin }
+  ]
+});
 
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!isAuthenticated) {
-      next({ name: 'Login' })
-    } else if (to.matched.some(record => record.meta.isAdmin) && !isAdmin) {
-      next({ name: 'Dashboard' })
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
-})
-
-
-export default router
+export default router;
