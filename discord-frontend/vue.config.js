@@ -1,18 +1,13 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require('@vue/cli-service');
 
 module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
-    allowedHosts: ['nexus.athenanetwork.gg'],
-    host: '0.0.0.0', // This allows external access
+    allowedHosts: [
+      'nexus.athenanetwork.gg'
+    ],
+    host: '127.0.0.1', // Force bind to IPv4 loopback address
     port: 8080, // Development server port
-    proxy: {
-      '/dev': {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-        pathRewrite: { '^/dev': '/' }, // Rewrite /dev/ path
-        secure: false,
-      },
-    },
-  },
-})
+    proxy: 'http://localhost:3001', // Adjust this to match the backend API if needed
+  }
+});
