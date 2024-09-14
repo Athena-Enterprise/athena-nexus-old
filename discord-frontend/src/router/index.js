@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LandingPage from '../views/LandingPage.vue'; // Landing page component
+import LandingPage from '../views/LandingPage.vue';
 import UserLogin from '../views/UserLogin.vue';
 import UserDashboard from '../views/UserDashboard.vue';
 import AdminDashboard from '../views/AdminDashboard.vue';
@@ -12,7 +12,7 @@ const routes = [
   {
     path: '/',
     name: 'landing-page',
-    component: LandingPage, // The landing page will be the default route
+    component: LandingPage,
   },
   {
     path: '/login',
@@ -27,7 +27,7 @@ const routes = [
       if (!isAuthenticated()) {
         next({ name: 'user-login' }); // Redirect to login if not authenticated
       } else {
-        next(); // Allow access if logged in
+        next();
       }
     },
   },
@@ -41,18 +41,15 @@ const routes = [
       } else if (!isAdmin()) {
         next({ name: 'user-dashboard' }); // Redirect to user dashboard if not an admin
       } else {
-        next(); // Allow access if authenticated and admin
+        next();
       }
     },
   },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(process.env.NODE_ENV === 'development' ? '/dev/' : '/'),
   routes,
 });
-
-// Global navigation guard to redirect authenticated users
-
 
 export default router;
