@@ -1,6 +1,6 @@
 <template>
   <div class="landing-page">
-    <!-- Navbar (full-width) -->
+    <!-- Navbar -->
     <nav :class="{'navbar-scrolled': isScrolled}" class="navbar">
       <div class="navbar-container">
         <div class="logo">
@@ -12,171 +12,151 @@
           <li><a href="#contact">Contact Us</a></li>
           <li><a href="#about">About Us</a></li>
         </ul>
-        <div class="nav-buttons" v-if="isScrolled">
+        <div v-if="isScrolled" class="nav-buttons">
           <button class="cta-button primary" @click="addBot">Add the Bot</button>
           <button class="cta-button secondary" @click="login">Login</button>
         </div>
       </div>
     </nav>
 
-    <!-- Hero Section (full-width) -->
-    <header class="header-bg">
-      <div class="header-content">
-        <h1 class="header-title">Athena Nexus</h1>
-        <p class="header-subtitle">The Ultimate Discord Management Solution for Large Servers</p>
-        <div class="cta-buttons">
-          <button class="cta-button primary" @click="addBot">Add the Bot</button>
-          <button class="cta-button secondary" @click="login">Login</button>
+    <!-- Hero Section -->
+    <header class="hero-section">
+      <div class="hero-content">
+        <h1>Athena Nexus</h1>
+        <p>The Ultimate Discord & Game Server Management Platform</p>
+        <div class="cta-buttons centered-cta">
+          <button class="cta-button primary large" @click="addBot">Add the Bot</button>
+          <button class="cta-button secondary large" @click="login">Login</button>
         </div>
       </div>
     </header>
 
-    <!-- Build Your Own Unique Discord Bot Section (centered content) -->
-    <section id="features" class="feature-section unique-bot">
+    <!-- Combined Features & Benefits Section -->
+    <section id="features-benefits" class="features-benefits-section">
       <div class="container">
-        <div class="feature-content">
-          <div class="text-content">
-            <h2>Build Your Own Unique Discord Bot</h2>
-            <p>Create a one-of-a-kind bot that aligns with your server’s personality. Customize commands, automations, and more.</p>
-            <button class="cta-button primary">Start Building</button>
+        <h2>Why Choose Athena Nexus</h2>
+        <div class="content-grid">
+          <!-- Features Section - Staggered Cards with Icons -->
+          <div class="feature card">
+            <i class="fas fa-cogs"></i>
+            <h3>Advanced Customization</h3>
+            <p>Create bots tailored to your server with custom commands, automations, and more.</p>
           </div>
-          <img src="https://i.imgur.com/3AynMql.gif" alt="Unique Bot" />
+          <div class="feature card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Security & Moderation</h3>
+            <p>Keep your community safe with powerful moderation tools.</p>
+          </div>
+          <div class="feature card">
+            <i class="fas fa-gamepad"></i>
+            <h3>Gaming Integrations</h3>
+            <p>Integrate with your favorite games and manage servers with ease.</p>
+          </div>
+          <div class="feature card">
+            <i class="fas fa-music"></i>
+            <h3>Music Controls</h3>
+            <p>Manage music on your server with intuitive commands.</p>
+          </div>
+
+          <!-- Benefits Section - Full Width Cards -->
+          <div class="benefit card full-width">
+            <i class="fas fa-rocket"></i>
+            <h3>Boost Productivity</h3>
+            <p>Save time and streamline server management with powerful automation features.</p>
+          </div>
+          <div class="benefit card full-width">
+            <i class="fas fa-user-friends"></i>
+            <h3>Community Building</h3>
+            <p>Keep your community engaged and organized with seamless integrations and tools.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Creative Welcome Messages Section (centered content) -->
-    <section class="feature-section welcome-messages">
-      <div class="container">
-        <div class="feature-content">
-          <img src="https://i.imgur.com/lZKkbAf.gif" alt="Welcome Messages" />
-          <div class="text-content">
-            <h2>Creative Welcome Messages</h2>
-            <p>Welcome your new members with style! Create unique messages with gifs, custom texts, and more.</p>
-            <button class="cta-button primary">Try It Now</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Advanced Custom Commands Section (centered content) -->
-    <section class="feature-section custom-commands">
-      <div class="container">
-        <div class="feature-content">
-          <div class="text-content">
-            <h2>Advanced Custom Commands</h2>
-            <p>Create intricate commands that automate tasks, manage roles, and much more, all tailored to your needs.</p>
-            <button class="cta-button primary">Create Commands</button>
-          </div>
-          <img src="https://i.imgur.com/ufJjP1O.gif" alt="Custom Commands" />
-        </div>
-      </div>
-    </section>
-
-    <!-- Features Comparison Section (centered content) -->
-    <section id="plans" class="features-section">
+    <!-- Plans Section - New Background Color -->
+    <section id="plans" class="plans-section">
       <div class="container">
         <h2>Choose Your Plan</h2>
-        <div class="pricing-table">
-          <div class="pricing-card">
-            <h3 class="plan-title">Free</h3>
-            <p class="plan-price">$0 <span>/month</span></p>
-            <ul class="features-list">
+        <div class="plans-grid">
+          <div class="plan-card">
+            <div class="tag top-right">Best for Starters</div>
+            <h3>Free Plan</h3>
+            <p class="price">$0/month</p>
+            <ul>
               <li><i class="fas fa-check"></i> Server Management</li>
-              <li><i class="fas fa-check"></i> Customization</li>
-              <li><i class="fas fa-check"></i> 24/7 Support</li>
-              <li><i class="fas fa-times"></i> Feature 1</li>
-              <li><i class="fas fa-times"></i> Feature 2</li>
+              <li><i class="fas fa-check"></i> Custom Commands</li>
+              <li><i class="fas fa-times"></i> 24/7 Support</li>
+              <li><i class="fas fa-times"></i> Unlimited Automations</li>
             </ul>
-            <button class="cta-button primary">Select Free</button>
+            <button class="cta-button primary">Get Started</button>
           </div>
-
-          <div class="pricing-card">
-            <h3 class="plan-title">Pro</h3>
-            <p class="plan-price">$9.99 <span>/month</span></p>
-            <ul class="features-list">
+          <div class="plan-card highlight">
+            <div class="tag top-right popular">Most Popular</div>
+            <h3>Pro Plan</h3>
+            <p class="price">$9.99/month</p>
+            <ul>
               <li><i class="fas fa-check"></i> Server Management</li>
-              <li><i class="fas fa-check"></i> Customization</li>
+              <li><i class="fas fa-check"></i> Custom Commands</li>
               <li><i class="fas fa-check"></i> 24/7 Support</li>
-              <li><i class="fas fa-check"></i> Feature 1</li>
-              <li><i class="fas fa-check"></i> Feature 2</li>
+              <li><i class="fas fa-check"></i> Unlimited Automations</li>
             </ul>
-            <button class="cta-button primary">Select Pro</button>
+            <button class="cta-button primary">Upgrade</button>
           </div>
-
-          <div class="pricing-card">
-            <h3 class="plan-title">Ultra</h3>
-            <p class="plan-price">$19.99 <span>/month</span></p>
-            <ul class="features-list">
+          <div class="plan-card">
+            <div class="tag top-right">For Power Users</div>
+            <h3>Ultra Plan</h3>
+            <p class="price">$19.99/month</p>
+            <ul>
               <li><i class="fas fa-check"></i> Server Management</li>
-              <li><i class="fas fa-check"></i> Customization</li>
+              <li><i class="fas fa-check"></i> Custom Commands</li>
               <li><i class="fas fa-check"></i> 24/7 Support</li>
-              <li><i class="fas fa-check"></i> Feature 1</li>
-              <li><i class="fas fa-check"></i> Feature 2</li>
+              <li><i class="fas fa-check"></i> Unlimited Automations</li>
             </ul>
-            <button class="cta-button primary">Select Ultra</button>
+            <button class="cta-button primary">Go Ultra</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Footer Section (custom design) -->
+    <!-- Footer Section -->
     <footer id="contact" class="footer">
       <div class="container footer-container">
-        <div class="footer-top">
-          <section class="newsletter">
-            <p>Sign up for our newsletter</p>
-            <form>
-              <input type="email" placeholder="Email address" />
-              <button type="submit">Subscribe</button>
-            </form>
-          </section>
+        <div class="footer-icons">
+          <ul class="social-media">
+            <li><a href="https://github.com" class="social-icon"><i class="fab fa-github fa-2x"></i></a></li>
+            <li><a href="https://twitter.com" class="social-icon"><i class="fab fa-twitter fa-2x"></i></a></li>
+            <li><a href="https://discord.com" class="social-icon"><i class="fab fa-discord fa-2x"></i></a></li>
+          </ul>
         </div>
-
         <div class="footer-links">
           <div class="link-column">
             <h5>Products</h5>
             <ul>
-              <li><a href="#!">Discord Bot</a></li>
-              <li><a href="#!">Custom Commands</a></li>
-              <li><a href="#!">Automation</a></li>
-              <li><a href="#!">Integrations</a></li>
+              <li><a href="#">Discord Bot</a></li>
+              <li><a href="#">Custom Commands</a></li>
+              <li><a href="#">Automation</a></li>
             </ul>
           </div>
-
           <div class="link-column">
             <h5>Resources</h5>
             <ul>
-              <li><a href="#!">Support</a></li>
-              <li><a href="#!">Documentation</a></li>
-              <li><a href="#!">Community</a></li>
-              <li><a href="#!">Blog</a></li>
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Documentation</a></li>
+              <li><a href="#">Community</a></li>
             </ul>
           </div>
-
           <div class="link-column">
             <h5>Company</h5>
             <ul>
-              <li><a href="#!">About Us</a></li>
-              <li><a href="#!">Careers</a></li>
-              <li><a href="#!">Terms of Service</a></li>
-              <li><a href="#!">Privacy Policy</a></li>
-            </ul>
-          </div>
-
-          <div class="link-column">
-            <h5>Contact</h5>
-            <ul>
-              <li><a href="#!">Contact Us</a></li>
-              <li><a href="#!">Partners</a></li>
-              <li><a href="#!">Press Inquiries</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Terms of Service</a></li>
             </ul>
           </div>
         </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>© 2024 Athena Nexus. All Rights Reserved.</p>
+        <div class="footer-bottom">
+          <p>© 2024 Athena Nexus. All Rights Reserved.</p>
+        </div>
       </div>
     </footer>
   </div>
@@ -199,62 +179,73 @@ export default {
     },
     login() {
       window.location.href = '#login';
-    },
+    }
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
-  },
+  }
 };
 </script>
 
 <style>
-/* Global reset and layout styles */
-body, html, #app, .landing-page {
+/* Color Coding for Theme Customization */
+:root {
+  --color-primary: #00D4FF;
+  --color-secondary: #00B3CC;
+  --color-background-dark: #141E30;
+  --color-background-darker: #0f2027;
+  --color-text-light: #ccc;
+  --color-footer-bg: #0f2027;
+  --color-footer-text: #ccc;
+  --color-section-light: #1B2A3A;
+  --color-section-dark: #10202A;
+  --color-plan-section: #1F2F3F;
+}
+
+/* Global Styles */
+body, html, .landing-page {
   margin: 0;
   padding: 0;
-  height: 100%;
-  width: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--color-background-darker);
+  color: white;
+  overflow-x: hidden;
 }
 
-.landing-page {
-  width: 100%;
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Navbar styles */
+/* Navbar */
 .navbar {
   position: fixed;
-  top: 0;
   width: 100%;
-  padding: 20px 40px;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  display: flex;
-  justify-content: center;
-  transition: background 0.3s, padding 0.3s;
+  padding: 20px 0;
+  background-color: transparent;
+  transition: background-color 0.5s ease, padding 0.5s ease;
   z-index: 1000;
 }
 
 .navbar-scrolled {
-  background: rgba(0, 0, 0, 0.9);
-  padding: 10px 40px;
+  background-color: rgba(30, 30, 30, 0.95);
 }
 
 .navbar-container {
-  width: 100%;
-  max-width: 1200px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .logo h2 {
   margin: 0;
-  color: #38B2AC;
+  color: var(--color-primary);
 }
 
 .nav-links {
@@ -263,15 +254,18 @@ body, html, #app, .landing-page {
   gap: 20px;
 }
 
-.nav-links li a {
-  color: white;
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a {
+  color: #fff;
   text-decoration: none;
-  font-size: 1rem;
   transition: color 0.3s;
 }
 
-.nav-links li a:hover {
-  color: #38B2AC;
+.nav-links a:hover {
+  color: var(--color-primary);
 }
 
 .nav-buttons {
@@ -280,37 +274,35 @@ body, html, #app, .landing-page {
 }
 
 /* Hero Section */
-.header-bg {
+.hero-section {
   height: 100vh;
-  background: linear-gradient(135deg, #141E30, #243B55, #0f2027);
-  background-size: 300% 300%;
-  animation: slowMove 20s ease infinite;
+  background: linear-gradient(to top left, var(--color-background-darker), var(--color-background-dark));
+  background-size: 400% 400%;
+  animation: animateGradient 12s linear infinite;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
   text-align: center;
-  position: relative;
 }
 
-.header-content {
-  max-width: 800px;
-  padding: 0 20px;
+@keyframes animateGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.header-title {
+.hero-content h1 {
   font-size: 4rem;
-  font-weight: bold;
   margin: 0;
+  color: var(--color-primary);
 }
 
-.header-subtitle {
+.hero-content p {
   font-size: 1.5rem;
-  margin-top: 20px;
-  color: #D1D5DB;
+  color: var(--color-text-light);
 }
 
-.cta-buttons {
+.centered-cta {
   margin-top: 30px;
   display: flex;
   justify-content: center;
@@ -318,230 +310,197 @@ body, html, #app, .landing-page {
 }
 
 .cta-button {
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding: 15px 30px;
   border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
   border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .cta-button.primary {
-  background-color: #38B2AC;
-  color: #fff;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  color: white;
 }
 
 .cta-button.primary:hover {
-  background-color: #2C7A7B;
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
 }
 
 .cta-button.secondary {
   background-color: transparent;
-  color: #38B2AC;
-  border: 2px solid #38B2AC;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
 }
 
 .cta-button.secondary:hover {
-  background-color: #38B2AC;
-  color: #fff;
-}
-
-/* Feature Sections */
-.feature-section {
-  padding: 80px 0;
-  background-color: #1B263B;
+  background-color: var(--color-primary);
   color: white;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+/* Features & Benefits Section */
+.features-benefits-section {
+  padding: 80px 0;
+  background-color: var(--color-section-light);
+  text-align: center;
 }
 
-.feature-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
 }
 
-.feature-content img {
-  width: 45%;
-  border-radius: 15px;
+.feature, .benefit {
+  background: linear-gradient(135deg, var(--color-background-dark), var(--color-background-darker));
+  border-radius: 10px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.text-content {
-  width: 50%;
-  max-width: 500px;
+.feature:hover, .benefit:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-.text-content h2 {
+.full-width {
+  grid-column: span 2;
+}
+
+.feature i, .benefit i {
   font-size: 2.5rem;
-  margin-bottom: 20px;
+  color: var(--color-primary);
 }
 
-.text-content p {
-  font-size: 1.2rem;
-  color: #A0AEC0;
-  margin-bottom: 20px;
+.feature h3, .benefit h3 {
+  margin-top: 10px;
+  color: var(--color-primary);
 }
 
-/* Pricing Table */
-.features-section {
+/* Plans Section */
+.plans-section {
   padding: 80px 0;
-  background-color: #1B263B;
-  color: white;
+  background-color: var(--color-plan-section);
 }
 
-.pricing-table {
+.plans-grid {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 30px;
 }
 
-.pricing-card {
-  background-color: #243B55;
+.plan-card {
+  position: relative;
+  background: linear-gradient(135deg, var(--color-background-darker), var(--color-background-dark));
   padding: 40px;
-  border-radius: 15px;
-  width: 300px;
+  border-radius: 10px;
+  width: 30%;
   text-align: center;
-  transition: transform 0.3s, background-color 0.3s;
+  transition: transform 0.3s ease;
 }
 
-.pricing-card:hover {
-  transform: translateY(-10px);
-  background-color: #2A3B5A;
+.plan-card:hover {
+  transform: translateY(-10px) scale(1.05);
 }
 
-.plan-title {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-  color: #38B2AC;
+.plan-card.highlight {
+  transform: translateY(-20px) scale(1.1);
 }
 
-.plan-price {
-  font-size: 2rem;
-  margin-bottom: 20px;
+.plan-card h3 {
+  color: var(--color-primary);
 }
 
-.plan-price span {
-  font-size: 1rem;
-  color: #A0AEC0;
+.plan-card .price {
+  font-size: 1.5rem;
+  color: #fff;
+  margin: 20px 0;
 }
 
-.features-list {
+.plan-card ul {
   list-style: none;
   padding: 0;
-  text-align: left;
-  margin-bottom: 20px;
 }
 
-.features-list li {
-  margin: 10px 0;
-  font-size: 1rem;
+.plan-card ul li {
+  padding: 10px 0;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.features-list i {
+.plan-card ul li i {
   margin-right: 10px;
-  color: #38B2AC;
+  color: var(--color-primary);
 }
 
-.features-list .fas.fa-times {
-  color: #E53E3E;
+.plan-card .tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--color-secondary);
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 0.9rem;
 }
 
-.pricing-card .cta-button {
-  width: 100%;
+.plan-card .tag.popular {
+  background-color: #ff6f61;
 }
 
-/* Footer Section */
+/* Footer */
 .footer {
-  background-color: #0D1B2A;
+  background-color: var(--color-footer-bg);
   padding: 60px 0;
-  color: #D1D5DB;
-  width: 100%;
+  color: var(--color-footer-text);
 }
 
 .footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.footer-top {
-  display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  max-width: 50%; /* Reduced width */
+  margin: 0 auto;
+}
+
+.footer-icons {
+  width: 100%;
+  text-align: center;
   margin-bottom: 30px;
 }
 
 .social-media {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
+  padding: 0;
+}
+
+.social-media li {
+  list-style-type: none;
 }
 
 .social-icon {
-  display: inline-block;
   color: white;
-  font-size: 1.5rem;
-  padding: 10px;
-  border: 1px solid white;
-  border-radius: 50%;
-  transition: background 0.3s, color 0.3s;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .social-icon:hover {
-  background-color: white;
-  color: #38B2AC;
-}
-
-.newsletter p {
-  color: white;
-  margin-bottom: 10px;
-}
-
-.newsletter form {
-  display: flex;
-  gap: 10px;
-}
-
-.newsletter input {
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  font-size: 1rem;
-}
-
-.newsletter button {
-  padding: 10px 20px;
-  background-color: #38B2AC;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.newsletter button:hover {
-  background-color: #2C7A7B;
+  color: var(--color-primary);
 }
 
 .footer-links {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 30px;
+  width: 100%;
+  margin-bottom: 20px;
+  gap: 10px; /* Reduced gap */
 }
 
 .link-column h5 {
-  color: #38B2AC;
-  margin-bottom: 20px;
+  color: var(--color-primary);
 }
 
 .link-column ul {
@@ -549,23 +508,24 @@ body, html, #app, .landing-page {
   padding: 0;
 }
 
-.link-column li {
-  margin-bottom: 10px;
+.link-column ul li {
+  margin: 10px 0;
 }
 
-.link-column a {
-  color: #D1D5DB;
+.link-column ul li a {
+  color: var(--color-footer-text);
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-.link-column a:hover {
-  color: #38B2AC;
+.link-column ul li a:hover {
+  color: var(--color-primary);
 }
 
 .footer-bottom {
   text-align: center;
-  padding: 20px;
-  background-color: rgba(0, 0, 0, 0.2);
+  margin-top: 40px;
+  width: 100%;
 }
 
 /* Responsive Design */
@@ -581,33 +541,12 @@ body, html, #app, .landing-page {
     display: none;
   }
 
-  .navbar-scrolled .nav-links {
-    display: flex;
-  }
-
-  .feature-content {
+  .plans-grid, .content-grid {
     flex-direction: column;
   }
 
-  .text-content, .feature-content img {
+  .plan-card, .feature, .benefit {
     width: 100%;
-  }
-
-  .pricing-table {
-    flex-direction: column;
-  }
-
-  .footer-container {
-    flex-direction: column;
-  }
-
-  .footer-top {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .newsletter form {
-    flex-direction: column;
   }
 
   .footer-links {
