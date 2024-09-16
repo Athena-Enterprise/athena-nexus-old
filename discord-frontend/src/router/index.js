@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LandingPage from '../views/LandingPage.vue';
-import UserLogin from '../views/UserLogin.vue';
 import UserDashboard from '../views/UserDashboard.vue';
 import AdminDashboard from '../views/AdminDashboard.vue';
 
@@ -13,11 +12,6 @@ const routes = [
     path: '/',
     name: 'landing-page',
     component: LandingPage,
-  },
-  {
-    path: '/login',
-    name: 'user-login',
-    component: UserLogin,
   },
   {
     path: '/user-dashboard',
