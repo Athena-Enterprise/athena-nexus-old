@@ -73,12 +73,12 @@
       </div>
     </section>
 
-    <!-- Plans Section - New Background Color -->
+    <!-- Plans Section - Adjusted Padding and Hover Effect -->
     <section id="plans" class="plans-section">
       <div class="container">
         <h2>Choose Your Plan</h2>
         <div class="plans-grid">
-          <div class="plan-card">
+          <div class="plan-card" style="margin-top: 20px;"> <!-- Added margin-top to prevent overlap -->
             <div class="tag top-right">Best for Starters</div>
             <h3>Free Plan</h3>
             <p class="price">$0/month</p>
@@ -102,7 +102,7 @@
             </ul>
             <button class="cta-button primary">Upgrade</button>
           </div>
-          <div class="plan-card">
+          <div class="plan-card" style="margin-top: 20px;">
             <div class="tag top-right">For Power Users</div>
             <h3>Ultra Plan</h3>
             <p class="price">$19.99/month</p>
@@ -402,8 +402,8 @@ body, html, .landing-page {
   transform: translateY(-10px) scale(1.05);
 }
 
-.plan-card.highlight {
-  transform: translateY(-20px) scale(1.1);
+.plan-card.highlight:hover {
+  transform: translateY(-10px) scale(1.05); /* Added hover for Pro Plan */
 }
 
 .plan-card h3 {

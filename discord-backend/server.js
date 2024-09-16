@@ -30,7 +30,8 @@ app.use(bodyParser.json());
 
 // OAuth2 Login Redirect
 app.get('/login', (req, res) => {
-  const discordOAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=identify`;
+  const discordOAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=identify%20bot%20applications.commands&permissions=8`;
+
   res.redirect(discordOAuthUrl);
 });
 
