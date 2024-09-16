@@ -35,13 +35,20 @@ app.get('/login', (req, res) => {
   res.redirect(discordOAuthUrl);
 });
 
-// OAuth2 Callback Route for Discord
+const session = require('express-session');
+
+// Initialize session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET,  // Set this in your .env
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: process.env.ENVIRONMENT === 'production' }  // Use secure cookies in production
+}));
+
+// After Discord OAuth, store the access token in the session
 app.get('/callback', async (req, res) => {
   const code = req.query.code;
-
-  if (!code) {
-    return res.status(400).send('No code provided');
-  }
+  if (!code) return res.status(400).send('No code provided');
 
   try {
     const tokenResponse = await axios.post('https://discord.com/api/oauth2/token', new URLSearchParams({
@@ -56,20 +63,12 @@ app.get('/callback', async (req, res) => {
 
     const accessToken = tokenResponse.data.access_token;
 
-    // Use access token to get user info
-    const userData = await axios.get('https://discord.com/api/users/@me', {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
+    req.session.accessToken = accessToken;  // Store in session for later use
 
-    const { id, username, discriminator } = userData.data;
-
-    // Store user in PostgreSQL (adjust SQL query as per your table schema)
-    await dbPool.query('INSERT INTO users (discord_id, username, discriminator) VALUES ($1, $2, $3) ON CONFLICT (discord_id) DO NOTHING', [id, username, discriminator]);
-
-    // Redirect to the dashboard
-    res.redirect('/dashboard');
+    // Redirect to CreateBot or User Dashboard
+    res.redirect('/create-bot');
   } catch (error) {
-    console.error('Error exchanging code:', error.response ? error.response.data : error.message);
+    console.error('Error exchanging code:', error);
     res.status(500).send('Internal Server Error');
   }
 });
@@ -143,6 +142,102 @@ app.post('/update-server-commands', async (req, res) => {
     res.status(200).send('Commands updated successfully.');
   } catch (error) {
     console.error('Error updating commands:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Fetch the user's available servers
+app.get('/api/servers', async (req, res) => {
+  const accessToken = req.session.accessToken; // Use the stored access token
+  try {
+    const response = await axios.get('https://discord.com/api/users/@me/guilds', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching servers:', error);
+    res.status(500).send('Error fetching servers');
+  }
+});
+
+// Fetch the members of a specific server
+app.get('/api/members', async (req, res) => {
+  const { server_id } = req.query;
+  const accessToken = req.session.accessToken;
+  
+  try {
+    const response = await axios.get(`https://discord.com/api/guilds/${server_id}/members`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching members:', error);
+    res.status(500).send('Error fetching members');
+  }
+});
+
+// Add the bot to the server and save the configuration
+app.post('/api/add-bot', async (req, res) => {
+  const { server_id, admin_ids, how_did_you_hear, plan } = req.body;
+
+  try {
+    // Store server info and configuration in the database
+    await dbPool.query(
+      'INSERT INTO server_settings (guild_id, admin_ids, plan, heard_about) VALUES ($1, $2, $3, $4)',
+      [server_id, admin_ids, plan, how_did_you_hear]
+    );
+    res.status(200).send('Bot added successfully');
+  } catch (error) {
+    console.error('Error adding bot to server:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Fetch the list of commands for a specific server
+app.get('/api/server-commands', async (req, res) => {
+  const { server_id } = req.query;
+
+  try {
+    const { rows } = await dbPool.query('SELECT * FROM guild_config WHERE guild_id = $1', [server_id]);
+    if (rows.length === 0) {
+      return res.status(404).send('No commands found for this server.');
+    }
+
+    const enabledCommands = rows[0].enabled_commands;
+    res.json({ commands: enabledCommands });
+  } catch (error) {
+    console.error('Error fetching server commands:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Update the command status for a specific server
+app.post('/api/update-server-commands', async (req, res) => {
+  const { server_id, command_name, enabled } = req.body;
+
+  try {
+    // Fetch the current commands configuration
+    const { rows } = await dbPool.query('SELECT enabled_commands FROM guild_config WHERE guild_id = $1', [server_id]);
+    
+    if (rows.length === 0) {
+      return res.status(404).send('No server found.');
+    }
+
+    // Update the enabled status of the command
+    let enabledCommands = rows[0].enabled_commands;
+    enabledCommands = enabledCommands.map(command => {
+      if (command.name === command_name) {
+        command.enabled = enabled;
+      }
+      return command;
+    });
+
+    // Update the database with the modified commands
+    await dbPool.query('UPDATE guild_config SET enabled_commands = $1 WHERE guild_id = $2', [enabledCommands, server_id]);
+    
+    res.status(200).send('Command status updated successfully.');
+  } catch (error) {
+    console.error('Error updating server commands:', error);
     res.status(500).send('Internal Server Error');
   }
 });

@@ -175,10 +175,10 @@ export default {
       this.isScrolled = window.scrollY > window.innerHeight - 80;
     },
     addBot() {
-      window.location.href = '#add-bot';
+      window.location.href = '/login'; // This redirects to the /login route to start OAuth
     },
     login() {
-      window.location.href = '#login';
+      window.location.href = '/login'; // Same as Add Bot for now, redirect to the login flow
     }
   },
   mounted() {
